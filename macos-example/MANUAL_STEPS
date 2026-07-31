@@ -1,0 +1,5 @@
+id: macos:set-keyboard-input-lang-us-intl
+body: settings->Keyboard->Text Input->US-Int set the keyboard langage to us intternational very hard to do programmatically
+
+id: macos:enable-night-shift
+body: in Displays, night shift advanced
