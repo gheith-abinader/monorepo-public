@@ -12,7 +12,7 @@ config_install(){
     for config in "$config_folder"/*; do
         [[ -f "$config" ]] || continue # skip folder if not file
 
-        target=$(config_location $config)
+        target=$(config_location "$config")
         target_dir="$(dirname "$target")"
         mkdir -p "$target_dir"
         config_contents "$config" > "$target"
@@ -33,7 +33,7 @@ config_location() {
 
   [ -n "$path" ] || fail "missing location header in dotfile definition: $definition"
 
-  expanded_path=$(expand_config_path $path)
+  expanded_path=$(expand_config_path "$path")
 
   printf '%s\n' "$expanded_path"
 }

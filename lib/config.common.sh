@@ -70,11 +70,11 @@ expand_config_path() {
       ;;
   esac
 
-  if [[ -z ${!variable_name+x} ]]; then
+  if [[ -z "${!variable_name+x}" ]]; then
     printf 'Undefined variable in config path: %s\n' "$variable_name" >&2
     return 1
   fi
 
-  variable_value=${!variable_name}
+  variable_value="${!variable_name}"
   printf '%s%s\n' "$variable_value" "$suffix"
 }
