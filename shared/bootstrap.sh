@@ -25,8 +25,8 @@ need_cmd sed
 sudo mkdir -p /usr/local/bin
 sudo chmod 755 /usr/local/bin
 
-REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-TVA_TEMPLATE="$REPO_ROOT/tva.sh"
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")." && pwd)"
+TVA_TEMPLATE="$REPO_ROOT/shared/tvaBootstrap/tva.sh"
 
 TVA_BIN="/usr/local/bin/tva"
 TVA_LIB="/usr/local/bin/tvaLib"

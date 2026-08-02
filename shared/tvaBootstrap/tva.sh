@@ -22,6 +22,7 @@ fail() {
 . "$SCRIPT_DIR/tvaLib/manual.next.sh"
 . "$SCRIPT_DIR/tvaLib/manual.done.sh"
 . "$SCRIPT_DIR/tvaLib/config.open.sh"
+. "$SCRIPT_DIR/tvaLib/config.apply.sh"
 . "$SCRIPT_DIR/tvaLib/install.sh"
 
 #main
@@ -44,10 +45,23 @@ main() {
       ;;
     config)
       shift
-      [ $# -eq 2 ] || fail "usage: tva config <project> <config_file_path>"
-      project="$1"
-      config_file="$2"
-      config_open "$project" "$config_file"
+
+      if [ "${1-}" = "apply" ]; then
+        shift
+        [ $# -eq 2 ] || fail "usage: tva config apply <project> <config_file_path>"
+        project="$1"
+        config_file="$2"
+        config_apply "$project" "$config_file"
+      else
+        if [ "${1-}" = "edit" ]; then
+          shift
+        fi
+
+        [ $# -eq 2 ] || fail "usage: tva config [edit] <project> <config_file_path>"
+        project="$1"
+        config_file="$2"
+        config_open "$project" "$config_file"
+      fi
       ;;
     manual)
       shift

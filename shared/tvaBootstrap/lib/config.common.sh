@@ -78,3 +78,18 @@ expand_config_path() {
   variable_value="${!variable_name}"
   printf '%s%s\n' "$variable_value" "$suffix"
 }
+
+config_location() {
+  local definition="$1"
+  local path
+  local expanded_path
+
+  path="$(sed -n '1s/^location:[[:space:]]*//p' "$definition")"
+  path="$(printf '%s' "$path" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+
+  [ -n "$path" ] || fail "missing location header in dotfile definition: $definition"
+
+  expanded_path=$(expand_config_path "$path")
+
+  printf '%s\n' "$expanded_path"
+}

@@ -15,25 +15,11 @@ config_install(){
         target=$(config_location "$config")
         target_dir="$(dirname "$target")"
         mkdir -p "$target_dir"
+        config_integrity_resolve $config $target
         config_contents "$config" > "$target"
         printf 'Installed dotfile directly: %s\n' "$target"
     done
     shopt -u dotglob nullglob
 
     return 0
-}
-
-config_location() {
-  local definition="$1"
-  local path
-  local expanded_path
-
-  path="$(sed -n '1s/^location:[[:space:]]*//p' "$definition")"
-  path="$(printf '%s' "$path" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
-
-  [ -n "$path" ] || fail "missing location header in dotfile definition: $definition"
-
-  expanded_path=$(expand_config_path "$path")
-
-  printf '%s\n' "$expanded_path"
 }
