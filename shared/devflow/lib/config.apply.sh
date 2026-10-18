@@ -1,8 +1,8 @@
-. "$SCRIPT_DIR/tvaLib/config.common.sh"
+. "$DEVFLOW_LIB_DIR/config.common.sh"
 
 config_apply(){
     local project="$1"
-    local config_folder="$REPO_ROOT/$project/$DOTFILES_DIRNAME"
+    local config_folder="$PROJECTS_DIR/$project/$DOTFILES_DIRNAME"
     local config="$2"
     local config_path="$config_folder/$config"
 

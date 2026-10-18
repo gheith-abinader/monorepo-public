@@ -13,7 +13,7 @@ list_projects() {
     fail "unknown argument for list: $1"
   fi
 
-  for dir in "$REPO_ROOT"/*/; do
+  for dir in "$PROJECTS_DIR"/*/; do
     [ -d "$dir" ] || continue
     base="$(basename "$dir")"
 

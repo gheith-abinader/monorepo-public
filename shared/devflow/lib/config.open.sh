@@ -6,7 +6,7 @@
 #   ...actual config content...
 #
 
-. "$SCRIPT_DIR/tvaLib/config.common.sh"
+. "$DEVFLOW_LIB_DIR/config.common.sh"
 
 config_open(){
     local project="$1"
@@ -23,7 +23,7 @@ config_open(){
         return 1
     fi
 
-    local project_root="$REPO_ROOT/$project"
+    local project_root="$PROJECTS_DIR/$project"
     if [ ! -d "$project_root" ]; then
         fail "$project not found as a directory"
     fi

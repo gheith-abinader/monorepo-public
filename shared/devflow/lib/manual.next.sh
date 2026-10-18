@@ -3,13 +3,13 @@ cmd_manual_next() {
   local current
   local next
 
-  if [ ! -s "$TVA_PENDING_FILE" ]; then
+  if [ ! -s "$DEVFLOW_PENDING_FILE" ]; then
     printf 'No pending manual steps.\n'
-    : > "$TVA_CURRENT_FILE"
+    : > "$DEVFLOW_CURRENT_FILE"
     return 0
   fi
 
-  current="$(head -n 1 "$TVA_CURRENT_FILE")"
+  current="$(head -n 1 "$DEVFLOW_CURRENT_FILE")"
   # find the line after this one
   local found=0
   next=
@@ -17,11 +17,11 @@ cmd_manual_next() {
     while IFS= read -r line; do
       [ "$found" = 1 ] && { next="$line"; break; }
       [ "$line" = "$current" ] && found=1
-    done < "$TVA_PENDING_FILE"
+    done < "$DEVFLOW_PENDING_FILE"
   fi
-  [ -n "$next" ] || next="$(head -n 1 "$TVA_PENDING_FILE")"
+  [ -n "$next" ] || next="$(head -n 1 "$DEVFLOW_PENDING_FILE")"
 
-  printf '%s\n' "$next" > "$TVA_CURRENT_FILE"
+  printf '%s\n' "$next" > "$DEVFLOW_CURRENT_FILE"
 
 # PRINTING THE NEXT ENTRY
   local key="$next"
@@ -31,7 +31,7 @@ cmd_manual_next() {
   found=0
 
   local project_dir
-  for project_dir in "$REPO_ROOT"/*/; do
+  for project_dir in "$PROJECTS_DIR"/*/; do
     [ -d "$project_dir" ] || continue
     file="$project_dir/$MANUAL_STEPS_FILENAME"
     [ -f "$file" ] || continue
@@ -68,7 +68,7 @@ cmd_manual_next() {
      printf '\n'
      printf '%s\n' "$body"
      printf '\n'
-     printf 'Command: tva manual done\n'
+     printf 'Command: devflow manual done\n'
      printf '\n'
      return 0
    fi

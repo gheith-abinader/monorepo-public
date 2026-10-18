@@ -11,4 +11,5 @@ docker run -d \
   --restart unless-stopped \
   -p 5001:5000 \
   -v "$REGISTRY_DATA_DIR:/var/lib/registry" \
+  -e REGISTRY_STORAGE_DELETE_ENABLED=true \
   registry:latest

@@ -1,9 +1,9 @@
-. "$SCRIPT_DIR/tvaLib/config.install.sh"
-. "$SCRIPT_DIR/tvaLib/manual.install.sh"
+. "$DEVFLOW_LIB_DIR/config.install.sh"
+. "$DEVFLOW_LIB_DIR/manual.install.sh"
 
 install_project() {
   local project="$1"
-  local project_dir="$REPO_ROOT/$project"
+  local project_dir="$PROJECTS_DIR/$project"
   local script
 
   [ -d "$project_dir" ] || fail "project not found: $project"

@@ -1,6 +1,6 @@
 install_manual_steps() {
     local project="$1"
-    local manual_steps_file="$REPO_ROOT/$project/$MANUAL_STEPS_FILENAME"
+    local manual_steps_file="$PROJECTS_DIR/$project/$MANUAL_STEPS_FILENAME"
 
     [ -f "$manual_steps_file" ] || return 0
 
@@ -9,8 +9,8 @@ install_manual_steps() {
 
     while IFS= read -r step_id; do
         has_manual_steps=1
-        if ! grep -qxF "$step_id" "$TVA_PENDING_FILE" 2>/dev/null; then
-            printf '%s\n' "$step_id" >> "$TVA_PENDING_FILE"
+        if ! grep -qxF "$step_id" "$DEVFLOW_PENDING_FILE" 2>/dev/null; then
+            printf '%s\n' "$step_id" >> "$DEVFLOW_PENDING_FILE"
         fi
     done < <(
         grep '^id: ' "$manual_steps_file" | cut -c5-
@@ -25,7 +25,7 @@ install_manual_steps() {
     printf '\n'
     printf '============================================================\n'
     printf 'MANUAL STEPS REQUIRED FOR PROJECT: %s\n' "$project"
-    printf 'Run: tva manual next\n'
+    printf 'Run: devflow manual next\n'
     printf '============================================================\n'
     printf '\n'
 }

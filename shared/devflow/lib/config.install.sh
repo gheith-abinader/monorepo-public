@@ -1,10 +1,10 @@
-. "$SCRIPT_DIR/tvaLib/config.common.sh"
-. "$SCRIPT_DIR/tvaLib/chmod_bulk.sh"
+. "$DEVFLOW_LIB_DIR/config.common.sh"
+. "$DEVFLOW_LIB_DIR/chmod_bulk.sh"
 export -f chmod_bulk
 
 config_install(){
     local project="$1"
-    local config_folder="$REPO_ROOT/$project/$DOTFILES_DIRNAME"
+    local config_folder="$PROJECTS_DIR/$project/$DOTFILES_DIRNAME"
 
     [[ -d "$config_folder" ]] || return 0
 

@@ -1,13 +1,13 @@
 manual_add() {
   local project="$1"
   local stepname="$2"
-  local project_dir="$REPO_ROOT/$project"
+  local project_dir="$PROJECTS_DIR/$project"
   local file
   local step_id
 
   [ -d "$project_dir" ] || fail "project not found: $project"
 
-  file="$(printf '%s/%s/%s\n' "$REPO_ROOT" "$project" "$MANUAL_STEPS_FILENAME")"
+  file="$(printf '%s/%s/%s\n' "$PROJECTS_DIR" "$project" "$MANUAL_STEPS_FILENAME")"
   step_id="$(printf '%s:%s\n' "$project" "$stepname")"
 
   if  grep -qxF "id: $step_id" "$file" 2>/dev/null; then
