@@ -1,0 +1,8 @@
+{
+  "id": "devflow",
+  "version": "0.1.0",
+  "name": "DevFlow",
+  "description": "Installs DevFlow, a shell-based tool for repeatable development workflows.",
+  "options": {},
+  "installsAfter": []
+}
