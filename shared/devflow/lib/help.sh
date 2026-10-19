@@ -9,13 +9,17 @@ Usage:
   devflow manual add <project> <stepname_no_spaces>
   devflow manual next
   devflow manual done
+  # BEGIN HOST-ONLY COMMAND
   devflow new devcontainer <project-name>
+  # END HOST-ONLY COMMAND
   devflow --help
 
+  # BEGIN HOST-ONLY COMMAND
 Host-only command:
   devflow new devcontainer <project-name>
       Create a project at the monorepo root from shared/templates/.devcontainer
       and link the shared DevFlow directory into the new project.
+  # END HOST-ONLY COMMAND
 
 Config commands:
   devflow config [edit] <project> <config_file_path>
