@@ -26,7 +26,6 @@ log "Installing DevFlow application files..."
 mkdir -p "$DEVFLOW_INSTALL_DIR/lib" /usr/local/bin
 
 if [[ -n "$PROJECT_ROOT" ]]; then
-  # Remove host-only commands entirely from the generated container CLI source.
   sed '/# BEGIN HOST-ONLY COMMAND/,/# END HOST-ONLY COMMAND/d' "$DEVFLOW_TEMPLATE" > "$DEVFLOW_TEMP"
 else
   cp "$DEVFLOW_TEMPLATE" "$DEVFLOW_TEMP"
@@ -36,8 +35,14 @@ install -m 0755 "${DEVFLOW_TEMP}.final" "$DEVFLOW_INSTALL_DIR/devflow.sh"
 
 for file in "$DEVFLOW_SOURCE_LIB_DIR"/*.sh; do
   [[ -f "$file" ]] || continue
-  if [[ -n "$PROJECT_ROOT" && "$(basename "$file")" == "new.devcontainer.sh" ]]; then
-    continue
+  filename="$(basename "$file")"
+  if [[ -n "$PROJECT_ROOT" ]]; then
+    [[ "$filename" == "new.devcontainer.sh" ]] && continue
+    if [[ "$filename" == "help.sh" ]]; then
+      sed '/# BEGIN HOST-ONLY COMMAND/,/# END HOST-ONLY COMMAND/d' "$file" > "${DEVFLOW_TEMP}.final"
+      install -m 0644 "${DEVFLOW_TEMP}.final" "$DEVFLOW_INSTALL_DIR/lib/$filename"
+      continue
+    fi
   fi
   install -m 0644 "$file" "$DEVFLOW_INSTALL_DIR/lib/"
 done
@@ -48,6 +53,5 @@ set -euo pipefail
 exec /usr/bin/env bash /opt/devflow/devflow.sh "$@"
 EOF
 chmod 0755 "$DEVFLOW_BIN"
-
 log "devflow installed at $DEVFLOW_BIN"
 log "Run: devflow --help"
