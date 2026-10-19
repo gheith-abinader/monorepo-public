@@ -3,6 +3,12 @@
   "version": "0.1.0",
   "name": "DevFlow",
   "description": "Installs DevFlow, a shell-based tool for repeatable development workflows.",
-  "options": {},
+  "options": {
+    "PROJECTS_DIR": {
+      "type": "string",
+      "default": "",
+      "description": "Absolute path to the project directory inside the container."
+    }
+  },
   "installsAfter": []
 }

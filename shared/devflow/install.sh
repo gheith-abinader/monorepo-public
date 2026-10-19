@@ -14,54 +14,21 @@ fail() {
 }
 
 # Locate the DevFlow source in the monorepo.
-REPO_ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd)"
+DEVFLOW_INSTALLER_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
 # Default project directory preserves the current behavior.
-PROJECT_DIR="$REPO_ROOT"
-log "Default project directory: $PROJECT_DIR"
+GH_REPO_ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd)"
+PROJECTS_DIR="${PROJECT_DIR:-$GH_REPO_ROOT}"
+log "Project directory: $PROJECTS_DIR"
 
 # DevFlow source files always come from the repository.
-DEVFLOW_SOURCE_LIB_DIR="$REPO_ROOT/shared/devflow/lib"
-DEVFLOW_TEMPLATE="$REPO_ROOT/shared/devflow/devflow.sh"
+DEVFLOW_SOURCE_LIB_DIR="$DEVFLOW_INSTALLER_DIR/lib"
+DEVFLOW_TEMPLATE="$DEVFLOW_INSTALLER_DIR/devflow.sh"
+log "DevFlow source: $DEVFLOW_SOURCE_LIB_DIR"
+log "DevFlow template: $DEVFLOW_TEMPLATE"
 
 DEVFLOW_TEMP="$(mktemp)"
 
-while [[ $# -gt 0 ]]; do
-    case "$1" in
-        --project-dir)
-            if [[ $# -lt 2 || -z "$2" ]]; then
-                fail "Error: --project-dir requires a path."
-                exit 2
-            fi
-
-            PROJECT_DIR="$2"
-            shift 2
-            ;;
-
-        --help|-h)
-            log "Usage: $0 [--project-dir PATH]"
-            exit 0
-            ;;
-
-        *)
-            fail "Error: unknown argument: $1"
-            log "Usage: $0 [--project-dir PATH]" >&2
-            exit 2
-            ;;
-    esac
-done
-
-log "user-specified project directory: $PROJECT_DIR"
-
-# Normalize the path without requiring it to exist yet.
-# A Dev Container workspace mount might not exist during image build.
-if [[ "$PROJECT_DIR" = /* ]]; then
-    :
-else
-    PROJECT_DIR="$PWD/$PROJECT_DIR"
-fi
-
-log "Project directory: $PROJECT_DIR"
 
 for cmd in bash install mkdir chmod; do
     command -v "$cmd" >/dev/null 2>&1 ||
@@ -80,7 +47,7 @@ mkdir -p "$DEVFLOW_INSTALL_DIR/lib" /usr/local/bin
 
 log "Installing global devflow wrapper..."
 
-sed "s|__PROJECTS_DIR__|$PROJECT_DIR|g" \
+sed "s|__PROJECTS_DIR__|$PROJECTS_DIR|g" \
     "$DEVFLOW_TEMPLATE" >"$DEVFLOW_TEMP"
 
 install -m 0755 "$DEVFLOW_TEMP" \

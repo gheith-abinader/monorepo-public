@@ -3,15 +3,15 @@
 
 install_project() {
   local project="$1"
-  local project_dir="$PROJECTS_DIR/$project"
+  local PROJECTS_DIR="$PROJECTS_DIR/$project"
   local script
 
-  [ -d "$project_dir" ] || fail "project not found: $project"
+  [ -d "$PROJECTS_DIR" ] || fail "project not found: $project"
 
-  set -- "$project_dir"/*.sh
+  set -- "$PROJECTS_DIR"/*.sh
   [ -f "$1" ] || fail "no installer scripts found in project: $project"
 
-  for script in "$project_dir"/*.sh; do
+  for script in "$PROJECTS_DIR"/*.sh; do
     [ -f "$script" ] || continue
     printf '==> Running %s for project %s\n' "$(basename "$script")" "$project"
     bash "$script"

@@ -30,10 +30,10 @@ cmd_manual_next() {
   local body
   found=0
 
-  local project_dir
-  for project_dir in "$PROJECTS_DIR"/*/; do
-    [ -d "$project_dir" ] || continue
-    file="$project_dir/$MANUAL_STEPS_FILENAME"
+  local PROJECTS_DIR
+  for PROJECTS_DIR in "$PROJECTS_DIR"/*/; do
+    [ -d "$PROJECTS_DIR" ] || continue
+    file="$PROJECTS_DIR/$MANUAL_STEPS_FILENAME"
     [ -f "$file" ] || continue
 
    current_id=""
