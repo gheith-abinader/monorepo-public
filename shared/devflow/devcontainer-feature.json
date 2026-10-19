@@ -4,10 +4,10 @@
   "name": "DevFlow",
   "description": "Installs DevFlow, a shell-based tool for repeatable development workflows.",
   "options": {
-    "PROJECTS_DIR": {
+    "PROJECT_ROOT": {
       "type": "string",
       "default": "",
-      "description": "Absolute path to the project directory inside the container."
+      "description": "Project root inside the container. When set, host-only commands are excluded."
     }
   },
   "installsAfter": []
